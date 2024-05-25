@@ -149,4 +149,5 @@ class SupermarketTest {
         val totalPrice = teller.checksOutArticlesFrom(cart).totalPrice
         assert(totalPrice == 25.0)
     }
+
 }
