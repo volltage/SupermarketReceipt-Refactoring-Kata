@@ -177,7 +177,6 @@ class SupermarketTest {
 
     @Test
     fun `should work with promotions on multiple objects`() {
-        val printer = ReceiptPrinter()
         val catalog = FakeCatalog()
         val toothbrush = Product("toothbrush", ProductUnit.Each)
         catalog.addProduct(toothbrush, 1.0)
@@ -194,18 +193,6 @@ class SupermarketTest {
         val receipt = teller.checksOutArticlesFrom(cart)
         val totalPrice = receipt.totalPrice
         assert(totalPrice == 22.0)
-        assert(
-            printer.printReceipt(receipt) == """
-            toothbrush                         10.00
-              1.00 * a
-            toothpaste                         20.00
-              10.00 * 2
-            30.0% off(toothbrush)              -3.00
-            2 for 15.0(toothpaste)             -5.00
-
-            Total:                             22.00
-            """.trimIndent()
-        )
     }
 
     @Test

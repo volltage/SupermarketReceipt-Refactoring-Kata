@@ -1,7 +1,5 @@
 package supermarket.model
 
-import java.util.*
-
 class Receipt {
     private val items = ArrayList<ReceiptItem>()
     private val discounts = ArrayList<Discount>()
@@ -19,7 +17,8 @@ class Receipt {
         }
 
     fun addProduct(p: Product, quantity: Double, price: Double, totalPrice: Double) {
-        this.items.add(ReceiptItem(p, quantity, price, totalPrice))
+        val element = ReceiptItem(p, quantity, price, totalPrice)
+        this.items.add(element)
     }
 
     fun getItems(): List<ReceiptItem> {
