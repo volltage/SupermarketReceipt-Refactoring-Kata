@@ -20,7 +20,8 @@ class SupermarketTest {
 
         val cart = ShoppingCart()
         cart.addItemQuantity(apples, 2.5)
-        cart.addItemQuantity(toothbrush, 2.0)
+        cart.addItemQuantity(toothbrush, 1.0)
+        cart.addItemQuantity(toothbrush, 1.0)
 
         val receipt = teller.checksOutArticlesFrom(cart)
 
@@ -31,10 +32,10 @@ class SupermarketTest {
             printer.printReceipt(receipt) == """
             apples                              4.98
               1.99 * 2.500
-            toothbrush                          1.98
-              0.99 * 2
+            toothbrush                          0.99
+            toothbrush                          0.99
             10.0% off(toothbrush)              -0.20
-
+            
             Total:                              6.76
         """.trimIndent()
         )

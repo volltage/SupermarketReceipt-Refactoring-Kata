@@ -4,7 +4,7 @@ class Receipt {
     private val items = ArrayList<ReceiptItem>()
     private val discounts = ArrayList<Discount>()
 
-    val totalPrice: Double?
+    val totalPrice: Double
         get() {
             var total = 0.0
             for (item in this.items) {
@@ -16,8 +16,8 @@ class Receipt {
             return total
         }
 
-    fun addProduct(p: Product, quantity: Double, price: Double, totalPrice: Double) {
-        val element = ReceiptItem(p, quantity, price, totalPrice)
+    fun addProduct(p: Product, quantity: Double, price: Double) {
+        val element = ReceiptItem(p, quantity, price)
         this.items.add(element)
     }
 
@@ -25,11 +25,35 @@ class Receipt {
         return ArrayList(this.items)
     }
 
-    fun addDiscount(discount: Discount) {
-        this.discounts.add(discount)
+    fun addDiscounts(offers2: Map<Product, Offer>) {
+        val discounts2 = getDiscounts(offers2)
+        this.discounts.addAll(discounts2)
     }
+
+    private fun getDiscounts(offers: Map<Product, Offer>): List<Discount> {
+        return items.groupBy { it.product }
+            .values
+            .map { receiptItems: List<ReceiptItem> ->
+                receiptItems.reduce { acc, receiptItem ->
+                    ReceiptItem(
+                        acc.product,
+                        receiptItem.quantity + acc.quantity,
+                        acc.price
+                    )
+                }
+            }
+            .filter { item -> offers.containsKey(item.product) }
+            .map {
+                val qua = it.quantity
+                val offer = offers[it.product]!!
+                val price = it.price
+                return@map DiscountFactory.getDiscoutns(offer, qua, price, it.product)
+            }.filterNotNull()
+    }
+
 
     fun getDiscounts(): List<Discount> {
         return discounts
     }
+
 }

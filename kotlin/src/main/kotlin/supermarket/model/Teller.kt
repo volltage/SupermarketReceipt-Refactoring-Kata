@@ -1,7 +1,5 @@
 package supermarket.model
 
-import java.util.HashMap
-
 
 class Teller(private val catalog: SupermarketCatalog) {
     private val offers = HashMap<Product, Offer>()
@@ -12,17 +10,15 @@ class Teller(private val catalog: SupermarketCatalog) {
 
     fun checksOutArticlesFrom(theCart: ShoppingCart): Receipt {
         val receipt = Receipt()
-        val cartItems = theCart.getItems()
-        for (cartItem in cartItems) {
-            val product = cartItem.product
-            val quantity = cartItem.quantity
-            val unitPrice = this.catalog.getUnitPrice(product)
-            val price = quantity * unitPrice
-            receipt.addProduct(product, quantity, unitPrice, price)
-        }
-        theCart.handleOffers(receipt, this.offers, this.catalog)
+        theCart.getItems()
+            .forEach { cartItem ->
+                val unitPrice = this.catalog.getUnitPrice(cartItem.product)
+                receipt.addProduct(cartItem.product, cartItem.quantity, unitPrice)
+            }
 
+        receipt.addDiscounts(this.offers)
         return receipt
     }
+
 
 }
