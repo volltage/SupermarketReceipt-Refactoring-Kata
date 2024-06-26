@@ -26,18 +26,18 @@ class SupermarketTest {
         val receipt = teller.checksOutArticlesFrom(cart)
 
         val totalPrice = receipt.totalPrice
-        assert(totalPrice != null)
         assert(totalPrice == 1.99 * 2.5 + 0.99 * 0.9 * 2)
         assert(
-            printer.printReceipt(receipt) == """
-            apples                              4.98
-              1.99 * 2.500
-            toothbrush                          0.99
-            toothbrush                          0.99
-            10.0% off(toothbrush)              -0.20
-            
-            Total:                              6.76
-        """.trimIndent()
+            printer.printReceipt(receipt) ==
+                    """
+                apples                              4.98
+                  1.99 * 2.500
+                toothbrush                          0.99
+                toothbrush                          0.99
+                10.0% off(toothbrush)              -0.20
+                
+                Total:                              6.76
+                """.trimIndent()
         )
     }
 
@@ -50,14 +50,14 @@ class SupermarketTest {
 
         val receipt = teller.checksOutArticlesFrom(cart)
         val totalPrice = receipt.totalPrice
-        assert(totalPrice != null)
         assert(totalPrice == 0.0)
         println(printer.printReceipt(receipt))
         assert(
-            printer.printReceipt(receipt) == """    
+            printer.printReceipt(receipt) ==
+                    """    
 
-    Total:                              0.00
-        """.trimIndent()
+                Total:                              0.00
+                """.trimIndent()
         )
     }
 
@@ -71,13 +71,11 @@ class SupermarketTest {
         val cart = ShoppingCart()
         cart.addItemQuantity(toothbrush, 1.0)
         val totalPrice = teller.checksOutArticlesFrom(cart).totalPrice
-        assert(totalPrice != null)
         assert(totalPrice == -0.99)
     }
 
     @Test
     fun `should be able to calculate correctly special offers no1`() {
-
         val catalog = FakeCatalog()
         val toothbrush = Product("toothbrush", ProductUnit.Each)
         catalog.addProduct(toothbrush, 1.0)
@@ -91,13 +89,14 @@ class SupermarketTest {
         val totalPrice = receipt.totalPrice
         assert(totalPrice == 8.0)
         assert(
-            printer.printReceipt(receipt) == """
-            toothbrush                         12.00
-              1.00 * c
-            3 for 2(toothbrush)                -4.00
+            printer.printReceipt(receipt) ==
+                    """
+                toothbrush                         12.00
+                  1.00 * c
+                3 for 2(toothbrush)                -4.00
 
-            Total:                              8.00
-        """.trimIndent()
+                Total:                              8.00
+                """.trimIndent()
         )
     }
 
@@ -116,13 +115,14 @@ class SupermarketTest {
         val totalPrice = receipt.totalPrice
         assert(totalPrice == 9.0)
         assert(
-            printer.printReceipt(receipt) == """
-            toothbrush                         15.00
-              1.00 * f
-            5 for 3.0(toothbrush)              -6.00
+            printer.printReceipt(receipt) ==
+                    """
+                toothbrush                         15.00
+                  1.00 * f
+                5 for 3.0(toothbrush)              -6.00
 
-            Total:                              9.00
-        """.trimIndent()
+                Total:                              9.00
+                """.trimIndent()
         )
     }
 
@@ -141,13 +141,14 @@ class SupermarketTest {
         val totalPrice = receipt.totalPrice
         assert(totalPrice == 4.0)
         assert(
-            printer.printReceipt(receipt) == """
-            toothbrush                         16.00
-              1.00 * 10
-            2 for 0.5(toothbrush)             -12.00
+            printer.printReceipt(receipt) ==
+                    """
+                toothbrush                         16.00
+                  1.00 * 10
+                2 for 0.5(toothbrush)             -12.00
 
-            Total:                              4.00
-        """.trimIndent()
+                Total:                              4.00
+                """.trimIndent()
         )
     }
 
@@ -166,13 +167,14 @@ class SupermarketTest {
         val totalPrice = receipt.totalPrice
         assert(totalPrice == 7.0)
         assert(
-            printer.printReceipt(receipt) == """
-            toothbrush                         10.00
-              1.00 * a
-            30.0% off(toothbrush)              -3.00
+            printer.printReceipt(receipt) ==
+                    """
+                toothbrush                         10.00
+                  1.00 * a
+                30.0% off(toothbrush)              -3.00
 
-            Total:                              7.00
-        """.trimIndent()
+                Total:                              7.00
+                """.trimIndent()
         )
     }
 
@@ -212,13 +214,14 @@ class SupermarketTest {
         val totalPrice = receipt.totalPrice
         assert(totalPrice == 25.0)
         assert(
-            printer.printReceipt(receipt) == """
-            toothbrush                        100.00
-              10.00 * a
-            2 for 5.0(toothbrush)             -75.00
-            
-            Total:                             25.00
-        """.trimIndent()
+            printer.printReceipt(receipt) ==
+                    """
+                toothbrush                        100.00
+                  10.00 * a
+                2 for 5.0(toothbrush)             -75.00
+                
+                Total:                             25.00
+                """.trimIndent()
         )
     }
 
@@ -238,13 +241,14 @@ class SupermarketTest {
         val totalPrice = receipt.totalPrice
         assert(totalPrice == 60.0)
         assert(
-            printer.printReceipt(receipt) == """
-            toothbrush                         90.00
-              10.00 * 9
-            3 for 2(toothbrush)               -30.00
-            
-            Total:                             60.00
-        """.trimIndent()
+            printer.printReceipt(receipt) ==
+                    """
+                toothbrush                         90.00
+                  10.00 * 9
+                3 for 2(toothbrush)               -30.00
+                
+                Total:                             60.00
+                """.trimIndent()
         )
     }
 }

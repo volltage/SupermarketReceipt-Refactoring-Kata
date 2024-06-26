@@ -44,10 +44,13 @@ class Receipt {
             }
             .filter { item -> offers.containsKey(item.product) }
             .map {
-                val qua = it.quantity
                 val offer = offers[it.product]!!
-                val price = it.price
-                return@map DiscountFactory.getDiscoutns(offer, qua, price, it.product)
+                val offerType = offer.offerType
+                return@map if (offerType.conditionToStart.invoke(it.quantity)) {
+                    offerType.calculateAmount.invoke(it.product, offer, it.quantity, it.price)
+                } else {
+                    null
+                }
             }.filterNotNull()
     }
 
