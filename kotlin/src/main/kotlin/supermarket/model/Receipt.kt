@@ -17,17 +17,17 @@ class Receipt {
         }
 
     fun addProduct(p: Product, quantity: Double, price: Double) {
-        val element = ReceiptItem(p, quantity, price)
-        this.items.add(element)
+        val item = ReceiptItem(p, quantity, price)
+        this.items.add(item)
     }
 
     fun getItems(): List<ReceiptItem> {
         return ArrayList(this.items)
     }
 
-    fun addDiscounts(offers2: Map<Product, Offer>) {
-        val discounts2 = getDiscounts(offers2)
-        this.discounts.addAll(discounts2)
+    fun addDiscounts(offers: Map<Product, Offer>) {
+        getDiscounts(offers)
+            .forEach { this.discounts.add(it) }
     }
 
     private fun getDiscounts(offers: Map<Product, Offer>): List<Discount> {
